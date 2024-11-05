@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css"/>
+    <title>歡迎來到預見咖啡</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(to right, #f3e6d7, #e8c2a0);
+            color: #333;
+        }
+        .container {
+            padding-top: 30px;
+            padding-bottom: 30px;
+        }
+        .card {
+            border: 0;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .btn-custom {
+            background-color: #FF6347;
+            color: white;
+            border-radius: 25px;
+            padding: 10px 20px;
+            transition: background-color 0.3s ease;
+        }
+        .btn-custom:hover {
+            background-color: #FF4500;
+        }
+        .navbar {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        #contact-form .form-group input,
+        #contact-form .form-group textarea {
+            border-radius: 10px;
+        }
+        img {
+            border-radius: 15px;
+            transition: transform 0.3s;
+        }
+        img:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">預見咖啡</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">首頁</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">關於我們</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="news.html">最新消息</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="menu.html">菜單</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">優雅空間</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="space.html">店內介紹</a></li>
+                            <li><a class="dropdown-item" href="reserve.html">座位預約服務</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">聯絡我們</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="text-center mb-5">歡迎來到預見咖啡</h1>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="img/coffee1.jpg" class="card-img-top" alt="Coffee Image">
+                    <div class="card-body">
+                        <h5 class="card-title">茶和咖啡</h5>
+                        <p class="card-text">歡迎來預見咖啡享受精心調製的茶和咖啡。</p>
+                        <a href="menu.html" class="btn btn-custom">查看菜單</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="img/space.jpg" class="card-img-top" alt="Space Image">
+                    <div class="card-body">
+                        <h5 class="card-title">優雅空間</h5>
+                        <p class="card-text">來享受預見咖啡的溫馨空間與放鬆的環境。</p>
+                        <a href="space.html" class="btn btn-custom">查看空間</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="img/news.jpg" class="card-img-top" alt="News Image">
+                    <div class="card-body">
+                        <h5 class="card-title">最新消息</h5>
+                        <p class="card-text">緊接最新的消息和動態，享受預見咖啡的享讚時光。</p>
+                        <a href="news.html" class="btn btn-custom">查看最新消息</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center mt-5 py-4 bg-light">
+        <p>&copy; 2024 預見咖啡. 所有權利保留。</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/..."></script>
+</body>
+</html>

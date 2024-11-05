@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>座位預約</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* 座位地圖樣式 */
+        .seat-map {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%; /* 調整座位區寬度 */
+            margin-bottom: 20px;
+        }
+        .seat {
+            width: 50px;
+            height: 50px;
+            margin: 5px;
+            background-color: white;
+            color: black;
+            text-align: center;
+            line-height: 50px;
+            border: 1px solid black;
+        }
+        .seat.reserved {
+            background-color: red;
+            color: white;
+        }
+        .seat.your-reservation {
+            background-color: blue;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">您的座位與預約資訊</h1>
+        <div class="row">
+            <!-- 左側：座位資訊顯示 -->
+            <div class="col-md-6">
+                <h5>座位資訊</h5>
+                <div class="seat-map" id="seatMap">
+                    <!-- 座位將動態顯示 -->
+                </div>
+                <!-- 圖片顯示 -->
+                <div>
+                    <img src="img/seat.jpg" alt="Seat Information" class="img-fluid">
+                </div>
+            </div>
+
+            <!-- 右側：預約資訊 -->
+            <div class="col-md-6">
+                <h5>預約詳情</h5>
+                <div id="reservationDetails">
+                    <p id="reservationInfo">尚未訂位</p>
+                    <ul id="reservationDetailList" style="list-style-type: none; padding: 0;"></ul>
+                </div>
+                <div class="text-center">
+                    <!-- 取消預約按鈕 -->
+                    <button id="cancelReservation" class="btn btn-danger" style="display: none;">取消預約</button>
+                </div>
+                <div class="text-center">
+                    <a href="order.html" class="btn btn-primary">進行新的預訂</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            fetchSeatStatus();
+
+            // 獲取座位狀態
+            function fetchSeatStatus() {
+                $.ajax({
+                    url: 'get_seat_status.php',
+                    method: 'GET',
+                    success: function(response) {
+                        var seatStatus = JSON.parse(response);
+                        displaySeats(seatStatus);  // 顯示座位
+                        checkUserReservation(seatStatus);  // 檢查是否有使用者預訂座位
+                    }
+                });
+            }
+
+            // 顯示座位在座位資訊中
+            function displaySeats(seatStatus) {
+                var seatMap = $('#seatMap');
+                seatMap.empty();  // 清除現有座位
+                seatStatus.forEach(function(seat) {
+                    var seatClass = seat.is_reserved ? 'seat reserved' : 'seat';
+                    if (seat.reserved_by_user) {
+                        seatClass = 'seat your-reservation';  // 使用者已預訂的座位顯示為綠色
+                    }
+                    var seatElement = '<div class="' + seatClass + '">' + seat.seat_id + '</div>';
+                    seatMap.append(seatElement);
+                });
+            }
+
+            // 檢查使用者是否已經預訂座位
+            function checkUserReservation(seatStatus) {
+                var reservedSeats = seatStatus.filter(function(seat) {
+                    return seat.reserved_by_user;  // 篩選出已被該用戶預訂的座位
+                });
+
+                if (reservedSeats.length > 0) {
+                    var seatInfo = reservedSeats.map(function(seat) {
+                        var details = `
+                            座位: ${seat.seat_id}<br>
+                            狀態: 已預約<br>
+                            日期: ${seat.date}<br>
+                            時間: ${seat.time}<br>
+                            人數: ${seat.people}<br>
+                            聯絡電話: ${seat.phone}<br>
+                            提前點餐: ${seat.pre_order == 1 ? '是' : '否'}
+                        `;
+                        return details;
+                    }).join('<br>');  // 多個座位用換行符號連接
+                    $('#reservationInfo').html(seatInfo);
+                    // 顯示取消預約按鈕
+                    $('#cancelReservation').show();
+                } else {
+                    $('#reservationInfo').html("尚未訂位");
+                    $('#cancelReservation').hide();
+                }
+            }
+
+            // 點擊取消預約按鈕
+            $('#cancelReservation').click(function() {
+                $.ajax({
+                    url: 'cancel_reservation.php',
+                    method: 'POST',
+                    success: function(response) {
+                        if (response === "success") {
+                            alert("預約已取消");
+                            fetchSeatStatus();  // 刷新座位狀態
+                        } else {
+                            alert("取消失敗：" + response);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
